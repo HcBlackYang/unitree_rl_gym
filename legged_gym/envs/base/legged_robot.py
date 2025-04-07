@@ -264,14 +264,26 @@ class LeggedRobot(BaseTask):
                 self.dof_pos_limits[i, 1] = m + 0.5 * r * self.cfg.rewards.soft_dof_pos_limit
         return props
 
+    # def _process_rigid_body_props(self, props, env_id):
+    #     # if env_id==0:
+    #     #     sum = 0
+    #     #     for i, p in enumerate(props):
+    #     #         sum += p.mass
+    #     #         print(f"Mass of body {i}: {p.mass} (before randomization)")
+    #     #     print(f"Total mass {sum} (before randomization)")
+    #     # randomize base mass
+    #     if self.cfg.domain_rand.randomize_base_mass:
+    #         rng = self.cfg.domain_rand.added_mass_range
+    #         props[0].mass += np.random.uniform(rng[0], rng[1])
+    #     return props
+
     def _process_rigid_body_props(self, props, env_id):
-        # if env_id==0:
-        #     sum = 0
-        #     for i, p in enumerate(props):
-        #         sum += p.mass
-        #         print(f"Mass of body {i}: {p.mass} (before randomization)")
-        #     print(f"Total mass {sum} (before randomization)")
-        # randomize base mass
+        # 安全检查，避免空列表索引错误
+        if len(props) == 0:
+            print("警告: 刚体属性列表为空")
+            return props
+
+        # 添加领域随机化
         if self.cfg.domain_rand.randomize_base_mass:
             rng = self.cfg.domain_rand.added_mass_range
             props[0].mass += np.random.uniform(rng[0], rng[1])

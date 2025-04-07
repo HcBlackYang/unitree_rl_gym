@@ -1,9 +1,10 @@
 import os
 import copy
-import torch
+from isaacgym import gymapi  # 先导入 isaacgym
+import torch  # 然后再导入 torch
+
 import numpy as np
 import random
-from isaacgym import gymapi
 from isaacgym import gymutil
 
 from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR

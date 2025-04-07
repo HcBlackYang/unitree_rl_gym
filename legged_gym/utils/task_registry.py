@@ -12,6 +12,8 @@ from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR
 from .helpers import get_args, update_cfg_from_args, class_to_dict, get_load_path, set_seed, parse_sim_params
 from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
 
+
+
 class TaskRegistry():
     def __init__(self):
         self.task_classes = {}
@@ -48,6 +50,9 @@ class TaskRegistry():
             isaacgym.VecTaskPython: The created environment
             Dict: the corresponding config file
         """
+
+        print("当前注册的任务:", self.task_classes.keys())  # 打印已注册的任务
+
         # if no args passed get command line arguments
         if args is None:
             args = get_args()
@@ -71,6 +76,7 @@ class TaskRegistry():
                             sim_device=args.sim_device,
                             headless=args.headless)
         return env, env_cfg
+
 
     def make_alg_runner(self, env, name=None, args=None, train_cfg=None, log_root="default") -> Tuple[OnPolicyRunner, LeggedRobotCfgPPO]:
         """ Creates the training algorithm  either from a registered namme or from the provided config file.
